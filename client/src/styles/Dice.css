@@ -1,0 +1,113 @@
+* {
+  box-sizing: border-box;
+}
+
+.dice--container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  height: 100%;
+  align-items: center;
+}
+
+.dice--main {
+  display: flex;
+}
+
+.dice--element {
+  width: 160px;
+  height: 160px;
+  border: 10px solid rgb(36, 37, 36);
+  border-radius: 10%;
+  background-color: rgb(255, 254, 254);
+  margin: 10px;
+  padding: 5px;
+}
+
+.die--piece {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(44, 44, 44);
+  border-radius: 50%;
+}
+
+.dice--element1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dice--element2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dice--element2 div:nth-child(2) {
+  align-self: flex-end;
+}
+
+.dice--element3 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dice--element3 div:nth-child(2) {
+  align-self: center;
+}
+
+.dice--element3 div:nth-child(3) {
+  align-self: flex-end;
+}
+
+.dice--element4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.dice--element4 div:nth-child(2) {
+  grid-column: end;
+}
+
+.dice--element4 div:nth-child(3) {
+  grid-row: end;
+}
+
+.dice--element4 div:nth-child(4) {
+  grid-row: end;
+  grid-column: end;
+}
+
+.dice--element5 {
+  display: grid;
+}
+
+.dice--element5 div:nth-child(2) {
+  grid-column: 3;
+  /* top right */
+}
+
+.dice--element5 div:nth-child(3) {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.dice--element5 div:nth-child(4) {
+  grid-row: 3;
+  /* bottom left */
+}
+
+.dice--element5 div:nth-child(5) {
+  grid-row: 3;
+  grid-column: 3;
+}
+
+.dice--element6 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.dice--element6 div:nth-child(even) {
+  grid-column: 3;
+  grid-column-end: 3;
+}
