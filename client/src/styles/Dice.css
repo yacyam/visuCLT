@@ -10,6 +10,11 @@
   align-items: center;
 }
 
+.dice--logic-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .dice--main {
   display: flex;
 }
