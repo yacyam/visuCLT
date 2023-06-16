@@ -1,11 +1,14 @@
-import { useState, useRef, useEffect } from 'react'
-import * as Plot from '@observablehq/plot'
+import { useState, useEffect } from 'react'
 import '../styles/Dice.css'
 import Graph from './Graph'
 
+export interface Dice {
+  allSums: { sum: number, freq: number }[],
+  allDice: number[],
+  largestSum: number
+}
+
 export default function Dice() {
-  const containerRef = useRef();
-  const [numDice, setNumDice] = useState(2)
   const [diceOdds, setDiceOdds] = useState({
     one: 1 / 6,
     two: 1 / 6,
@@ -14,12 +17,9 @@ export default function Dice() {
     five: 1 / 6,
     six: 1 / 6
   })
-  const [diceArray, setDiceArray] = useState([2, 1])
-  const [largestElem, setLargestElem] = useState(10)
-
 
   const createInitialData = (length: number) => {
-    const allSums: number = 6 * length
+    const allSums = 6 * length
     const sumObject: { sum: number, freq: number }[] = []
 
     for (let i = length; i <= allSums; i += 1) {
@@ -29,41 +29,16 @@ export default function Dice() {
     return sumObject
   }
 
-  const [data, setData] = useState(createInitialData(diceArray.length))
-
-  useEffect(() => {
-    if (data === undefined) return;
-
-    const barChart = Plot.plot({
-      style: {
-        backgroundColor: 'black'
-      },
-      color: { scheme: 'BuRd' },
-      marks: [
-        Plot.barY(data, {
-          x: "sum",
-          y: "freq",
-        }),
-        Plot.ruleY([0])
-      ],
-      y: {
-        grid: true,
-        tickSpacing: 50,
-        domain: [0, largestElem]
-      },
-      marginLeft: 50,
-      marginTop: 50,
-      marginBottom: 50
-    });
-    containerRef.current.append(barChart);
-    return () => barChart.remove();
-  }, [data])
+  const [diceData, setDiceData] = useState({
+    allSums: createInitialData(5),
+    allDice: [1, 1, 1, 4, 2],
+    largestSum: 10
+  })
 
   useEffect(() => {
     setTimeout(() => {
       rollDice()
     }, 100)
-
   })
 
   function rollDice(): void {
@@ -73,10 +48,9 @@ export default function Dice() {
     const fourRange = threeRange + diceOdds.four
     const fiveRange = fourRange + diceOdds.five
 
-    let sum = 0
-    setDiceArray(oldDice => {
-
-      return oldDice.map(() => {
+    setDiceData(oldDice => {
+      let sum = 0
+      const newRolledDice = oldDice.allDice.map(() => {
         const rollNumber = Math.random()
 
         const finalRoll =
@@ -91,21 +65,27 @@ export default function Dice() {
 
         return finalRoll
       })
-    })
 
-    setData(oldData => {
-      return oldData.map((sumFreq) => {
+      let newLargestSum = 10
+
+      const newDiceSums = oldDice.allSums.map((sumFreq) => {
         if (sumFreq.sum === sum) {
-          const newFreq = Math.max(largestElem, sumFreq.freq + 1)
-          setLargestElem(newFreq)
+          const newFreq = Math.max(oldDice.largestSum, sumFreq.freq + 1)
+          newLargestSum = newFreq
           return { sum: sum, freq: sumFreq.freq + 1 }
         }
         return sumFreq
       })
+
+      return {
+        allSums: newDiceSums,
+        allDice: newRolledDice,
+        largestSum: newLargestSum
+      }
     })
   }
 
-  const diceElements = diceArray.map((die, i) => {
+  const diceElements = diceData.allDice.map((die, i) => {
     const allDiePieces = []
 
     for (let i = 0; i < die; i += 1) {
@@ -130,11 +110,11 @@ export default function Dice() {
         <button className='dice--change-btn' onClick={rollDice}>Roll Die</button>
       </div>
 
-
-
-      <div ref={containerRef} />
-
-      <Graph />
+      <Graph
+        data={diceData}
+        xAxis="sum"
+        yAxis="freq"
+      />
 
     </div>
   )
