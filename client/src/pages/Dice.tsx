@@ -238,7 +238,10 @@ export default function Dice() {
   }
 
   function changeSimulationSpeed(speed: number): void {
-    setSimulationSpeed(() => {
+    setSimulationSpeed(prevSpeed => {
+      if (prevSpeed === speed) {
+        return prevSpeed
+      }
       clearAllTimeouts()
       return speed
     })
