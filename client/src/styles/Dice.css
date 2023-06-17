@@ -2,36 +2,65 @@
   box-sizing: border-box;
 }
 
+button {
+  background: none;
+  color: white;
+  outline: none;
+  border: 1px solid white;
+}
+
+button:hover {
+  border-color: rgb(255, 183, 0);
+  color: rgb(255, 183, 0);
+}
+
 .dice--container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.dice--graph {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-evenly;
-  height: 100%;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+
+.dice--graph.fullscreen {
+  width: 100vw;
+  height: 100vh;
 }
 
 .dice--logic-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .dice--main {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+
 }
 
 .dice--element {
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 140px;
+  min-width: 0;
+  min-height: 0;
   border: 10px solid rgb(36, 37, 36);
   border-radius: 10%;
   background-color: rgb(255, 254, 254);
-  margin: 10px;
+  margin: 5px;
   padding: 5px;
 }
 
 .die--piece {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   background-color: rgb(44, 44, 44);
   border-radius: 50%;
 }
@@ -115,4 +144,47 @@
 .dice--element6 div:nth-child(even) {
   grid-column: 3;
   grid-column-end: 3;
+}
+
+.dice--simulation {
+  display: flex;
+  align-items: center;
+}
+
+.dice--simulation>* {
+  margin: 10px
+}
+
+.dice--form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dice--form input {
+  width: 100px;
+  margin: 5px;
+  color: white;
+  background-color: black;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid white
+}
+
+.dice--add-sub {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 140px;
+}
+
+.dice--add-sub button {
+  width: 80px;
+  margin-top: 5px;
+}
+
+.dice--odds-logic {
+  margin: 10px;
 }

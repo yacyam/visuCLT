@@ -2,5 +2,6 @@
   height: 100vh;
   background: black;
   background-size: cover;
+  overflow: auto;
   color: white;
 }
